@@ -10,7 +10,7 @@ const app = express();
 // Update origin to allow your frontend domain
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://stackscope.vercel.app'],
+    origin: ['http://localhost:5173', 'https://stack-scope-rcqx.vercel.app'],
     credentials: true,
   })
 );
@@ -30,7 +30,7 @@ app.get('/auth/github/callback', async (req, res) => {
         client_secret: process.env.CLIENT_SECRET,
         code,
         // 🔁 Redirect URI for production
-        redirect_uri: 'https://stackscope.vercel.app/auth/github/callback',
+        redirect_uri: 'https://stack-scope-rcqx.vercel.app/auth/github/callback',
       },
       {
         headers: {
