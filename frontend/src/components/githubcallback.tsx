@@ -9,7 +9,7 @@ export default function GitHubCallback() {
   const alreadyFetched = useRef(false);
 
   useEffect(() => {
-    const fetchGitHubUser = async () => {
+    const fetchGitHubUser = async () => {fetchGitHubUser
       if (!code || alreadyFetched.current) return;
       alreadyFetched.current = true;
 
