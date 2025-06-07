@@ -7,7 +7,13 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+// Update origin to allow your frontend domain
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://stackscope.vercel.app'],
+    credentials: true,
+  })
+);
 
 app.get('/auth/github/callback', async (req, res) => {
   const code = req.query.code;
@@ -20,10 +26,11 @@ app.get('/auth/github/callback', async (req, res) => {
     const tokenResponse = await axios.post(
       'https://github.com/login/oauth/access_token',
       {
-        client_id: process.env.CLIENT_ID,       // ← updated to match GitHub secret name
-        client_secret: process.env.CLIENT_SECRET, // ← updated to match GitHub secret name
+        client_id: process.env.CLIENT_ID,
+        client_secret: process.env.CLIENT_SECRET,
         code,
-        redirect_uri: 'http://localhost:5173/auth/github/callback',
+        // 🔁 Redirect URI for production
+        redirect_uri: 'https://stackscope.vercel.app/auth/github/callback',
       },
       {
         headers: {
@@ -47,8 +54,7 @@ app.get('/auth/github/callback', async (req, res) => {
 
     const githubUser = userResponse.data;
 
-    // TODO: Save the user info and token in your DB or session here
-
+    // Return user info for frontend
     res.json({ user: githubUser, accessToken });
   } catch (error) {
     console.error('GitHub OAuth callback error:', error.response?.data || error.message);
