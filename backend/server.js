@@ -1,11 +1,9 @@
-// server.js (CommonJS version)
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
 dotenv.config();
-
 
 const app = express();
 
@@ -22,10 +20,9 @@ app.get('/auth/github/callback', async (req, res) => {
     const tokenResponse = await axios.post(
       'https://github.com/login/oauth/access_token',
       {
-        client_id: process.env.GITHUB_CLIENT_ID,
-        client_secret: process.env.GITHUB_CLIENT_SECRET,
+        client_id: process.env.CLIENT_ID,       // ← updated to match GitHub secret name
+        client_secret: process.env.CLIENT_SECRET, // ← updated to match GitHub secret name
         code,
-        // redirect_uri should match exactly the one used in authorization request
         redirect_uri: 'http://localhost:5173/auth/github/callback',
       },
       {
@@ -34,7 +31,7 @@ app.get('/auth/github/callback', async (req, res) => {
         },
       }
     );
-    
+
     console.log('GitHub token response:', tokenResponse.data);
 
     const accessToken = tokenResponse.data.access_token;
@@ -52,10 +49,9 @@ app.get('/auth/github/callback', async (req, res) => {
 
     // TODO: Save the user info and token in your DB or session here
 
-    // For now, just return user info for demo
     res.json({ user: githubUser, accessToken });
   } catch (error) {
-    console.error('GitHub OAuth callback error:', error);
+    console.error('GitHub OAuth callback error:', error.response?.data || error.message);
     res.status(500).send('Authentication failed');
   }
 });
@@ -64,5 +60,3 @@ const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
