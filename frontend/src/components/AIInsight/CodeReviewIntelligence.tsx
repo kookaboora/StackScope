@@ -23,7 +23,7 @@ export default function CodeReviewSentimentChart() {
   const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem('githubToken');
-  const openaiKey = "";
+  const openaiKey = import.meta.env.VITE_OPENAI_KEY;
   const userData = localStorage.getItem('githubUser');
   const user = userData ? JSON.parse(userData) : null;
 

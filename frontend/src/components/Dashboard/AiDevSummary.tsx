@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const openaiKey = localStorage.getItem('openaiKey');
+const openaiKey = import.meta.env.VITE_OPENAI_KEY;
 import {
   ResponsiveContainer,
   LineChart,
