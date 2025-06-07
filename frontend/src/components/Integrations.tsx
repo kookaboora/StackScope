@@ -2,7 +2,7 @@ import Navbar from '../components/Navbar';
 import { Github } from 'lucide-react';
 
 export default function Integrations() {
-  const clientId = import.meta.env.VITE_GITHUB_CLIENT_ID;
+  const clientId = import.meta.env.VITE_CLIENT_ID;
   const redirectUri = encodeURIComponent('http://localhost:5173/auth/github/callback');
   const scope = encodeURIComponent('repo read:user');
 
