@@ -14,7 +14,7 @@ export default function GitHubCallback() {
       alreadyFetched.current = true;
 
       try {
-        const res = await axios.get(`http://stackscope-backend-production.up.railway.app/auth/github/callback?code=${code}`);
+        const res = await axios.get(`https://stackscope-backend-production.up.railway.app/auth/github/callback?code=${code}`);
         const { user, accessToken } = res.data;
 
         // ✅ Save to localStorage
